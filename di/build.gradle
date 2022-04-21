@@ -30,6 +30,12 @@ android {
 }
 
 dependencies {
+    //local dependencies
+    implementation project(path: ':shared:core')
+    implementation project(path: ':features:dashboard')
+    implementation project(path: ':shared:data:local')
+    implementation project(path: ':shared:data:remote')
+    implementation project(path: ':shared:navigation')
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'

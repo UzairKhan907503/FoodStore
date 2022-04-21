@@ -14,3 +14,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "FoodStore"
 include ':app'
+include ':di'
+include ':features:dashboard'
+include ':shared:navigation'
+include ':shared:core'
+include ':shared:data:local'
+include ':shared:data:remote'

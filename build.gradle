@@ -1,5 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+    ext{
+        BASE_URL = "http://mobcategories.s3-website-eu-west-1.amazonaws.com"
+    }
     repositories {
         google()
         mavenCentral()

@@ -1,8 +1,6 @@
 package com.sampleapp.remote.utils
 
 object ApiUtils {
-    const val BASE_URL = "https://api.worldweatheronline.com/premium/v1/"
-    const val WEATHER_UPDATES = "weather.ashx"
-    const val API_KEY = "b17430f61a27465ea77192310221304"
+    const val BASE_URL = "http://mobcategories.s3-website-eu-west-1.amazonaws.com"
 }
 

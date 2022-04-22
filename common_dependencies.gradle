@@ -18,6 +18,7 @@ buildscript {
         kotlinx_converter_version = '0.8.0'
         androidx_lifecycle_version = "2.4.1"
         coil = "1.4.0"
+        BASE_URL = "http://mobcategories.s3-website-eu-west-1.amazonaws.com"
 
         commonDependencies = [
                 hiltKapt             : "com.google.dagger:hilt-android-compiler:$hilt_version",

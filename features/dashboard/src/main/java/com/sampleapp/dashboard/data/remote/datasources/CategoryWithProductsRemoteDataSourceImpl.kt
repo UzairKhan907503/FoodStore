@@ -16,7 +16,7 @@ class CategoryWithProductsRemoteDataSourceImpl @Inject constructor(
 ) : CategoryWithProductsRemoteDataSource, BaseRemoteDataSource() {
 
     override fun getCategoriesWithProducts(): Flow<Resource<List<Category>>> = safeApiCall {
-        apiClient.getAllData()
+        apiClient.getFoodItems()
     }.map { it ->
         it.transform { it.toDomainModel() }
     }

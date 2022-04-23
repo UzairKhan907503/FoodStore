@@ -10,10 +10,14 @@ inline fun <T> manageDataSource(
     crossinline getDataFromPersistence: suspend () -> Flow<T>,
     crossinline updateLocal: suspend (T) -> Unit
 ): Flow<Resource<T>> = flow {
+
     getDataFromServer().collect { response ->
         when (response) {
             is Resource.Valid -> {
                 updateLocal(response.data)
+                getDataFromPersistence().collect {
+                    emit(Resource.Valid(it))
+                }
             }
             is Resource.Invalid -> {
                 emit(Resource.Invalid(response.message))

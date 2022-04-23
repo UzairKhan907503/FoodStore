@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
     id 'kotlinx-serialization'
     id 'androidx.navigation.safeargs'
@@ -44,5 +45,6 @@ dependencies {
     implementation project(path: ':shared:core')
     kapt commonDependencies.hiltKapt
     implementation commonDependencies.hilt
+    implementation commonDependencies.coil
     implementation commonDependencies.lifecycleViewModel
 }

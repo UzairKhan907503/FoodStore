@@ -1,8 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext{
-        BASE_URL = "http://mobcategories.s3-website-eu-west-1.amazonaws.com"
-    }
     repositories {
         google()
         mavenCentral()
@@ -11,8 +8,10 @@ buildscript {
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.38.1'
         classpath "org.jetbrains.kotlin:kotlin-serialization:1.6.10"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.4.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
     }
 }
+
 
 plugins {
     id 'com.android.application' version '7.1.2' apply false

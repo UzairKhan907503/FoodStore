@@ -49,9 +49,12 @@ dependencies {
     api commonDependencies.coroutineCore
     api commonDependencies.coroutineAndroid
     api commonDependencies.fragmentKtx
+    api commonDependencies.runtimeKtx
     api commonDependencies.navigationFragmentKtx
     api commonDependencies.uiKtx
     api commonDependencies.coil
+    api commonDependencies.swipe
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     api project(path: ':shared:data:local')
     api project(path: ':shared:data:remote')

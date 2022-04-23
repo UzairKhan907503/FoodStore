@@ -3,6 +3,7 @@ package com.sampleapp.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import com.sampleapp.core.navigationflows.MainActivityNavigationFlow
+import com.sampleapp.core.utils.navigate
 
 class MainActivityNavigationImpl : MainActivityNavigation {
     override fun navigateToFlow(
@@ -12,14 +13,13 @@ class MainActivityNavigationImpl : MainActivityNavigation {
     ) {
         when (flowMainActivity) {
             is MainActivityNavigationFlow.Dashboard -> {
-                navOptions?.run {
-                    navController.navigate(
+                    navigate(
+                        navController,
                         MainActivityNavigationDirections.actionToDashboard(),
-                        build()
+                        navOptions
                     )
-                } ?: navController.navigate(MainActivityNavigationDirections.actionToDashboard())
+                }
             }
         }
 
     }
-}

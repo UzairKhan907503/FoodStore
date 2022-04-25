@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivProduct"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@mipmap/app_icon" />
+
+        <TextView
+            android:id="@+id/tvProduct"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="monospace"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/ivProduct"
+            app:layout_constraintStart_toStartOf="@id/ivProduct"
+            app:layout_constraintTop_toBottomOf="@id/ivProduct"
+            tools:text="Coke" />
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/amaranth_bold"
+            android:textColor="@color/theme_color"
+            app:layout_constraintEnd_toEndOf="@id/tvProduct"
+            app:layout_constraintStart_toStartOf="@id/tvProduct"
+            app:layout_constraintTop_toBottomOf="@id/tvProduct"
+            tools:text="2 Euro" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

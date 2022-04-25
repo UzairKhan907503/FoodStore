@@ -43,6 +43,10 @@ android {
             }
         }
     }
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+    }
 }
 
 dependencies {
@@ -59,6 +63,7 @@ dependencies {
     //testing
     testImplementation testingDependencies.junit
     testImplementation testingDependencies.coroutineTest
+    androidTestImplementation testingDependencies.coroutineTest
     testImplementation testingDependencies.googleTruth
     androidTestImplementation testingDependencies.googleTruth
     testImplementation testingDependencies.mockito

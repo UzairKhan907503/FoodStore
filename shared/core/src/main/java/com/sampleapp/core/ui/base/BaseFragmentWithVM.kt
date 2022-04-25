@@ -11,7 +11,7 @@ import com.sampleapp.core.utils.collectWhenStarted
 import com.sampleapp.core.utils.showError
 import kotlinx.coroutines.flow.collect
 
-abstract class BaseFragmentWithVM<T : ViewDataBinding, V : BaseViewModel>() : Fragment() {
+abstract class BaseFragmentWithVM<T : ViewDataBinding, V : BaseViewModel> : Fragment() {
     private var _binding: T? = null
     val binding get() = _binding!!
 

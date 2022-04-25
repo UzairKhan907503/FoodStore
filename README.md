@@ -62,9 +62,9 @@ Local module contains logic for db and It can contain shared preference logic as
 
 Tried to have as much test coverage as possible under current time constraints
 
-Domain module is tested mostly using mocks by mockk.io 
+Domain module is tested mostly using mocks by mockk.io
 
-DB is tested in local module. 
+DB is tested in local module.
 
 The Api communication is tested in dashboard module using mock web server
 
@@ -83,6 +83,6 @@ The Api communication is tested in dashboard module using mock web server
 
 Use jetpack compose for UI
 
-Write UI tests 
+Write UI tests
 
 Use dependency injection for testing

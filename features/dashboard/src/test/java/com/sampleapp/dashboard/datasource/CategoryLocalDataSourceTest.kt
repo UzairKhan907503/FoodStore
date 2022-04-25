@@ -27,31 +27,29 @@ class CategoryLocalDataSourceTest {
     }
 
     @Test
-    fun `get categories with products returns data from db and map it to domain model`() {
-        every { categoryDao.getAllCategoriesWithProducts() } returns getCategoriesDBFlow()
+    fun `get categories with products returns data from db and map it to domain model`() =
         runBlockingTest {
+            every { categoryDao.getAllCategoriesWithProducts() } returns getCategoriesDBFlow()
             categoryDataSource.getCategoriesWithProducts().first().let {
                 assertThat(it).isEqualTo(getCategories())
             }
+
         }
-    }
 
     @Test
-    fun `save categories by converting domain model category to db model`() {
+    fun `save categories by converting domain model category to db model`() = runBlockingTest {
         val inputData = slot<List<CategoryDBModel>>()
-
         coEvery { categoryDao.insert(capture(inputData)) } returns Unit
-        runBlockingTest {
-            categoryDataSource.saveCategoriesWithProducts(getCategories())
-            val categories = inputData.captured
-            assertThat(categories).isEqualTo(getCategories().toDBModel())
-        }
+        categoryDataSource.saveCategoriesWithProducts(getCategories())
+        val categories = inputData.captured
+        assertThat(categories).isEqualTo(getCategories().toDBModel())
+
     }
 
     @Test
-    fun `delete all categories`() {
+    fun `delete all categories`() = runBlockingTest {
         coEvery { categoryDao.deleteAll() } returns Unit
-        runBlockingTest { categoryDataSource.deleteAll() }
+        categoryDataSource.deleteAll()
         coVerify { categoryDao.deleteAll() }
         confirmVerified(categoryDao)
     }

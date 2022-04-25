@@ -9,7 +9,8 @@ import com.sampleapp.remote.utils.Resource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.serialization.ExperimentalSerializationApi
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
@@ -22,17 +23,16 @@ import org.junit.Test
 class CategoryRemoteDataSourceTest {
 
     @get:Rule
-    val instantTaskExecutorRule =  InstantTaskExecutorRule()
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    lateinit var mockServer : MockWebServer
+    private lateinit var mockServer: MockWebServer
 
     private lateinit var categoryRemoteDataSource: CategoryWithProductsRemoteDataSource
 
     private lateinit var apiService: ApiService
 
-
     @Before
-    fun setup(){
+    fun setup() {
         mockServer = MockWebServer()
         mockServer.dispatcher = MockDispatcher()
         mockServer.start()
@@ -45,19 +45,19 @@ class CategoryRemoteDataSourceTest {
      * make sure you are connected to internet only then
      */
     @Test
-    fun getValidData(){
-        val data = categoryRemoteDataSource.getCategoriesWithProducts()
-        runBlocking {
-            data.take(2).toList().run {
+    fun getValidData() = runBlockingTest {
+       val job = launch {
+            categoryRemoteDataSource.getCategoriesWithProducts().take(2).toList().run {
                 assertThat(get(0)).isEqualTo(Resource.Loading(null))
                 assertThat((get(1) as Resource.Valid).data[0].categoryId).isEqualTo("36802")
                 assertThat((get(1) as Resource.Valid).data[0].products[0].productId).isEqualTo("1")
             }
         }
+        job.cancel()
     }
 
     @After
-    fun clean(){
+    fun clean() {
         mockServer.shutdown()
     }
 

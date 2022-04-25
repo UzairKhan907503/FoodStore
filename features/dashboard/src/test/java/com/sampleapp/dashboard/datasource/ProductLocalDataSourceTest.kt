@@ -17,29 +17,23 @@ class ProductLocalDataSourceTest {
 
     private lateinit var productLocalDataSource: ProductLocalDataSource
 
-
     @Before
-    fun setup(){
+    fun setup() {
         productLocalDataSource = ProductLocalDataSourceImpl(productDao)
     }
 
-
     @Test
-    fun `save list of products`(){
+    fun `save list of products`() = runBlockingTest {
         coEvery { productDao.insert(any()) } returns Unit
-        runBlockingTest {
-            productLocalDataSource.saveProducts(getCategories().flatMapTo(mutableListOf()){it.products})
-        }
+        productLocalDataSource.saveProducts(getCategories().flatMapTo(mutableListOf()) { it.products })
         coVerify { productDao.insert(any()) }
         confirmVerified(productDao)
     }
 
     @Test
-    fun `delete list of products`(){
+    fun `delete list of products`() = runBlockingTest {
         coEvery { productDao.deleteAll() } returns Unit
-        runBlockingTest {
-            productLocalDataSource.deleteAll()
-        }
+        productLocalDataSource.deleteAll()
         coVerify { productDao.deleteAll() }
         confirmVerified(productDao)
     }

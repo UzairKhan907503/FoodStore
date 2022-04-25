@@ -13,7 +13,7 @@ import com.sampleapp.remote.utils.Resource
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
 import kotlin.time.ExperimentalTime
@@ -38,80 +38,81 @@ class CategoryRepositoryTest {
 
     @ExperimentalTime
     @Test
-    fun `get all categories for Valid response`() {
+    fun `get all categories for Valid response`() = runBlockingTest {
         every { remoteDataSource.getCategoriesWithProducts() } returns getCategoriesResourceFlow(
             Response.Valid
         )
         val slot = slot<List<Category>>()
+        coEvery { categoryLocalDataSource.deleteAll() } returns Unit
+        coEvery { productLocalDataSource.deleteAll() } returns Unit
         coEvery { categoryLocalDataSource.saveCategoriesWithProducts(capture(slot)) } returns Unit
         coEvery { categoryLocalDataSource.getCategoriesWithProducts() } returns flow { emit(slot.captured) }
-
-        runBlocking {
-            repository.getAllCategories().collect {
-                assertThat(it).isEqualTo(Resource.Valid(slot.captured))
-            }
+        repository.getAllCategories().collect {
+            assertThat(it).isEqualTo(Resource.Valid(slot.captured))
         }
+
     }
 
     @ExperimentalTime
     @Test
-    fun `get all categories for Invalid response from server and persistence is empty`() {
-        every { remoteDataSource.getCategoriesWithProducts() } returns getCategoriesResourceFlow(
-            Response.Invalid
-        )
-        coEvery { categoryLocalDataSource.getCategoriesWithProducts() } returns flow { emit(listOf()) }
-        runBlocking {
+    fun `get all categories for Invalid response from server and persistence is empty`() =
+        runBlockingTest {
+            every { remoteDataSource.getCategoriesWithProducts() } returns getCategoriesResourceFlow(
+                Response.Invalid
+            )
+            coEvery { categoryLocalDataSource.getCategoriesWithProducts() } returns flow {
+                emit(
+                    listOf()
+                )
+            }
             repository.getAllCategories().take(2).toList().run {
                 assertThat(get(0)).isEqualTo(Resource.Invalid<List<Category>>(ERROR_MESSAGE))
                 assertThat(get(1)).isEqualTo(Resource.Valid<List<Category>>(listOf()))
             }
         }
-    }
 
     @ExperimentalTime
     @Test
-    fun `get all categories if remote response is Invalid but data is stored in persistence`() {
-        every { remoteDataSource.getCategoriesWithProducts() } returns getCategoriesResourceFlow(
-            Response.Invalid
-        )
-        coEvery { categoryLocalDataSource.getCategoriesWithProducts() } returns getFlowCategories()
-        runBlocking {
+    fun `get all categories if remote response is Invalid but data is stored in persistence`() =
+        runBlockingTest {
+            every { remoteDataSource.getCategoriesWithProducts() } returns getCategoriesResourceFlow(
+                Response.Invalid
+            )
+            coEvery { categoryLocalDataSource.getCategoriesWithProducts() } returns getFlowCategories()
             repository.getAllCategories().take(2).toList().run {
                 assertThat(get(0)).isEqualTo(Resource.Invalid<List<Category>>(ERROR_MESSAGE))
                 assertThat(get(1)).isEqualTo(Resource.Valid(getCategories()))
             }
+
         }
-    }
 
     @ExperimentalTime
     @Test
-    fun `manage data source test when remote response is valid`() {
+    fun `manage data source test when remote response is valid`() = runBlockingTest {
         val list = mutableListOf<Category>()
-        runBlocking {
-            manageDataSource(
-                getDataFromServer = { getCategoriesResourceFlow(Response.Valid) },
-                getDataFromPersistence = { flow { emit(list) } },
-                updateLocal = { list.addAll(it) }
-            ).first().let {
-                assertThat(it).isEqualTo(Resource.Valid(list))
-            }
+        manageDataSource(
+            getDataFromServer = { getCategoriesResourceFlow(Response.Valid) },
+            getDataFromPersistence = { flow { emit(list) } },
+            updateLocal = { list.addAll(it) }
+        ).first().let {
+            assertThat(it).isEqualTo(Resource.Valid(list))
         }
+
     }
 
     @ExperimentalTime
     @Test
-    fun `manage data source test when remote response is Invalid and cache is not empty`() {
+    fun `manage data source test when remote response is Invalid and cache is not empty`() = runBlockingTest {
         var list = getCategories()
-        runBlocking {
-            manageDataSource(
-                getDataFromServer = { getCategoriesResourceFlow(Response.Invalid) },
-                getDataFromPersistence = { flow { emit(list) } },
-                updateLocal = { list = it }
-            ).take(2).toList().run {
-                assertThat(get(0)).isEqualTo(Resource.Invalid<List<Category>>(ERROR_MESSAGE))
-                assertThat(get(1)).isEqualTo(Resource.Valid(list))
-            }
+        manageDataSource(
+            getDataFromServer = { getCategoriesResourceFlow(Response.Invalid) },
+            getDataFromPersistence = { flow { emit(list) } },
+            updateLocal = { list = it }
+        ).take(2).toList().run {
+            assertThat(get(0)).isEqualTo(Resource.Invalid<List<Category>>(ERROR_MESSAGE))
+            assertThat(get(1)).isEqualTo(Resource.Valid(list))
         }
+
     }
 
 }

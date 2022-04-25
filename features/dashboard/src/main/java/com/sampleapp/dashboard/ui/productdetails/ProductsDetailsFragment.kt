@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import coil.load
 import com.sampleapp.core.ui.base.BaseFragmentWithVM
-import com.sampleapp.core.utils.getCompleteUrl
-import com.sampleapp.core.utils.getProgressDrawable
 import com.sampleapp.core.utils.loadImage
 import com.sampleapp.dashboard.R
 import com.sampleapp.dashboard.databinding.FragmentProductDetailsBinding

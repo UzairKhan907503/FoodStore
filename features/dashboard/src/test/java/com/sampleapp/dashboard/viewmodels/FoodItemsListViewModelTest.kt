@@ -11,13 +11,15 @@ import com.sampleapp.dashboard.data.getCategories
 import com.sampleapp.dashboard.data.getCategoriesResourceFlow
 import com.sampleapp.dashboard.ui.productlist.FoodItemsListStates
 import com.sampleapp.dashboard.utils.MainCoroutinesRule
+import com.sampleapp.remote.utils.Resource
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -34,34 +36,32 @@ class FoodItemsListViewModelTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-
     @Before
     fun setup() {
         viewModel = FoodItemsListViewModel(categoryUseCase)
     }
 
     @Test
-    fun `get categories with products when server response valid`() {
+    fun `get categories with products when server response valid`() = runBlockingTest {
         coEvery { categoryUseCase.getAllWithProducts() } returns getCategoriesResourceFlow(Response.Valid)
-        runBlocking {
-            viewModel.state.take(2).toList().run {
-                assertThat(get(0)).isEqualTo(FoodItemsListStates.Loading)
-                assertThat(get(1)).isEqualTo(
-                    FoodItemsListStates.ProductsDetailsFetched(
-                        getCategories()
-                    )
+        viewModel.state.take(2).toList().run {
+            assertThat(get(0)).isEqualTo(FoodItemsListStates.Loading)
+            assertThat(get(1)).isEqualTo(
+                FoodItemsListStates.ProductsDetailsFetched(
+                    getCategories()
                 )
-            }
+            )
         }
+
     }
 
     @Test
-    fun `get categories with products when server response Invalid and db have data`() {
-        coEvery {
-            categoryUseCase.getAllWithProducts()
-        } returns getCategoriesResourceFlow(Response.Invalid) andThen
-                getCategoriesResourceFlow(Response.Valid)
-        runBlocking {
+    fun `get categories with products when server response Invalid and db have data`() =
+        runBlockingTest {
+            coEvery {
+                categoryUseCase.getAllWithProducts()
+            } returns getCategoriesResourceFlow(Response.Invalid) andThen
+                    getCategoriesResourceFlow(Response.Valid)
             viewModel.baseEvents.first().let {
                 assertThat(it).isEqualTo(BaseViewModel.BaseEvent.EventError(ERROR_MESSAGE))
             }
@@ -72,7 +72,28 @@ class FoodItemsListViewModelTest {
                         getCategories()
                     )
                 )
+
             }
         }
-    }
+
+    @Test
+    fun `get categories with products when server response Invalid and db is empty`() =
+        runBlockingTest {
+            coEvery {
+                categoryUseCase.getAllWithProducts()
+            } returns getCategoriesResourceFlow(Response.Invalid) andThen
+                    flow { emit(Resource.Valid(listOf())) }
+            viewModel.baseEvents.first().let {
+                assertThat(it).isEqualTo(BaseViewModel.BaseEvent.EventError(ERROR_MESSAGE))
+            }
+
+            viewModel.state.first().let {
+                assertThat(it).isEqualTo(
+                    FoodItemsListStates.ProductsDetailsFetched(
+                        listOf()
+                    )
+                )
+            }
+        }
+
 }

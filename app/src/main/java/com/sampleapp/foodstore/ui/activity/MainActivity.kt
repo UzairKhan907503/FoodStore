@@ -3,7 +3,9 @@ package com.sampleapp.foodstore.ui.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.sampleapp.core.ui.activityviewmodel.LaunchActivityEvents
@@ -12,6 +14,7 @@ import com.sampleapp.foodstore.R
 import com.sampleapp.navigation.MainActivityNavigation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -34,13 +37,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
-        lifecycleScope.launchWhenStarted {
-            mViewModel.event.collect { events ->
-                when (events) {
-                    is LaunchActivityEvents.NavigateToFlow -> {
-                        launchActivityNavigation.navigateToFlow(
-                            navController, events.destination, events.navOptions
-                        )
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mViewModel.event.collect { events ->
+                    when (events) {
+                        is LaunchActivityEvents.NavigateToFlow -> {
+                            launchActivityNavigation.navigateToFlow(
+                                navController, events.destination, events.navOptions
+                            )
+                        }
                     }
                 }
             }

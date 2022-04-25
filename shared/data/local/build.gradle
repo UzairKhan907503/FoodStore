@@ -29,6 +29,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+    }
 }
 
 dependencies {
@@ -36,10 +40,12 @@ dependencies {
     implementation persistenceDependencies.ktx
     kapt persistenceDependencies.compiler
     testImplementation persistenceDependencies.testing
+    androidTestImplementation testingDependencies.coroutineTest
     androidTestImplementation testingDependencies.androidJunit
+    androidTestImplementation testingDependencies.googleTruth
     androidTestImplementation testingDependencies.archCore
     androidTestImplementation testingDependencies.androidxRunner
-    androidTestImplementation testingDependencies.googleTruth
+    androidTestImplementation testingDependencies.androidxRunner
     implementation project(path: ':shared:data:remote')
 
 }

@@ -9,7 +9,6 @@ import com.sampleapp.remote.utils.Resource
 import com.sampleapp.remote.utils.transform
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import retrofit2.Response
 import javax.inject.Inject
 
 class CategoryWithProductsRemoteDataSourceImpl @Inject constructor(

@@ -8,10 +8,10 @@ class DiffCallbackCategory : DiffUtil.ItemCallback<Category>() {
     override fun areItemsTheSame(
         oldItem: Category,
         newItem: Category
-    ) = oldItem.hashCode() == newItem.hashCode()
+    ) = oldItem.categoryId == newItem.categoryId
 
     override fun areContentsTheSame(
         oldItem: Category,
         newItem: Category
-    ) = oldItem.hashCode() == newItem.hashCode()
+    ) = oldItem == newItem
 }

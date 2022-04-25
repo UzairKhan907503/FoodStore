@@ -17,8 +17,7 @@
 
 ## Features
 
-1. **Multi Features Modules:** Multi feature modules architecture have been followed in this project
-   where every feature have their own module
+1. **Multi Features Modules:** Multi feature modules architecture have been followed in this project where every feature have their own module
 2. **Clean Architecture:** The app is built using Uncle Bob's clean architecture
 3. **MVI Architecture:** UI management is in the form of states by using state flows.
 4. **Navigation** Each feature module will have their own internal module navigation, But navigation
@@ -27,14 +26,14 @@
 ## Architecture
 
 This app is using stack of architectures like multi feature modules, Clean Architecture, MVI
-Architecture that makes it highly scale-able SOLID principles were kept in mind while developing the
+Architecture that makes it highly scale-able, SOLID principles were kept in mind while developing the
 project. By using this architecture every feature have their own clean architecture implemented
 within it. Every module will have their own resources and testing logics If its not being used
 anywhere else.
 
 ## Modules
 
-To make this app highly scale-able every feature is separated out in a new module, with feature
+To make this app highly scale-able, every feature is separated out in a new module, with feature
 based modules there are also some service based modules i.e., 'data'
 
 ### App Module
@@ -61,8 +60,13 @@ Local module contains logic for db and It can contain shared preference logic as
 
 ## Testing
 
-Most of the testing Domain module is tested mostly using mocks by mockk.io DB is tested in local
-module. The Api communication is tested in dashboard module using mock web server
+Tried to have as much test coverage as possible under current time constraints
+
+Domain module is tested mostly using mocks by mockk.io 
+
+DB is tested in local module. 
+
+The Api communication is tested in dashboard module using mock web server
 
 ## Libraries
 
@@ -77,4 +81,8 @@ module. The Api communication is tested in dashboard module using mock web serve
 
 ## Future Enhancements
 
-Use jetpack compose for UI Writing UI tests Use dependency injection for unit testing
+Use jetpack compose for UI
+
+Write UI tests 
+
+Use dependency injection for testing

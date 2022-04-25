@@ -3,7 +3,7 @@
 ## Index
 
 - [Screenshots](#screenshots)
-- [App Features](#app features)
+- [Features](#features)
 - [Architecture](#architecture)
 - [Modules](#modules)
 - [Testing](#testing)
@@ -15,7 +15,7 @@
 <img src="screenshots/product_list.png" width=300> <img src="screenshots/product_details.png" width=300>
 
 
-## App Features
+## Features
 
 1. **Multi Features Modules:** Multi feature modules architecture have been followed in this project
    where every feature have their own module
@@ -46,7 +46,7 @@ between modules.
 
 DI module contains dependency injection logic for all the application.
 
-### Features
+### Feature Modules
 
 Features Directory have all relevant feature modules, to navigate to a feature navigation module is
 used. All features are using shared modules to use common components.

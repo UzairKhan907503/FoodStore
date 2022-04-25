@@ -36,9 +36,17 @@ android {
     buildFeatures{
         dataBinding true
     }
+    sourceSets {
+        main {
+            res {
+                srcDirs 'src/main/res', 'src/test/res', 'src/androidTest/res'
+            }
+        }
+    }
 }
 
 dependencies {
+
     implementation project(path: ':shared:data:local')
     implementation project(path: ':shared:data:remote')
     implementation project(path: ':shared:navigation')
@@ -47,4 +55,18 @@ dependencies {
     implementation commonDependencies.hilt
     implementation commonDependencies.coil
     implementation commonDependencies.lifecycleViewModel
+
+    //testing
+    testImplementation testingDependencies.junit
+    testImplementation testingDependencies.coroutineTest
+    testImplementation testingDependencies.googleTruth
+    androidTestImplementation testingDependencies.googleTruth
+    testImplementation testingDependencies.mockito
+    androidTestImplementation testingDependencies.androidJunit
+    testImplementation testingDependencies.archCore
+    androidTestImplementation testingDependencies.archCore
+    androidTestImplementation testingDependencies.androidxRunner
+    testImplementation testingDependencies.testCore
+    testImplementation testingDependencies.mockServer
+    androidTestImplementation testingDependencies.mockServer
 }

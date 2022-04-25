@@ -6,8 +6,6 @@ buildscript {
         app_compat_version = '1.4.1'
         material_version = '1.5.0'
         constraint_version = '2.1.3'
-        junit_version = '4.13.2'
-        android_junit_version = '1.1.3'
         expresso_version = '3.4.0'
         coroutine_version = "1.5.2"
         ktx_version = '2.3.5'
@@ -21,6 +19,18 @@ buildscript {
         runtime_ktx_version = "2.4.1"
         swipe_version = "1.1.0"
 
+        //testing versions
+        junit_version = '4.13.2'
+        android_junit_version = '1.1.3'
+        truth_version = "1.0.1"
+        turbine_version = "0.4.0"
+        mockito_version = "1.12.3"
+        arch_core_version = "2.1.0"
+        android_runner_version = "1.4.0"
+        test_core_version = "1.4.0"
+        mock_server_version = "4.9.0"
+
+
         commonDependencies = [
                 hiltKapt             : "com.google.dagger:hilt-android-compiler:$hilt_version",
                 hilt                 : "com.google.dagger:hilt-android:$hilt_version",
@@ -28,8 +38,6 @@ buildscript {
                 appCompat            : "androidx.appcompat:appcompat:$app_compat_version",
                 material             : "com.google.android.material:material:$material_version",
                 constraintlayout     : "androidx.constraintlayout:constraintlayout:$constraint_version",
-                junit                : "junit:junit:$junit_version",
-                androidJunit         : "androidx.test.ext:junit:$android_junit_version",
                 expresso             : "androidx.test.espresso:espresso-core:$expresso_version",
                 coroutineAndroid     : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version",
                 coroutineCore        : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version",
@@ -54,6 +62,18 @@ buildscript {
                 ktx     : "androidx.room:room-ktx:$room_version",
                 compiler: "androidx.room:room-compiler:$room_version",
                 testing : "androidx.room:room-testing:$room_version",
+        ]
+
+        testingDependencies = [
+                junit         : "junit:junit:$junit_version",
+                googleTruth   : "com.google.truth:truth:$truth_version",
+                coroutineTest : "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version",
+                mockito       : "io.mockk:mockk:$mockito_version",
+                androidJunit  : "androidx.test.ext:junit:$android_junit_version",
+                archCore      : "androidx.arch.core:core-testing:$arch_core_version",
+                androidxRunner: "androidx.test:runner:$android_runner_version",
+                testCore      : "androidx.test:core:$test_core_version",
+                mockServer    : "com.squareup.okhttp3:mockwebserver:$mock_server_version"
         ]
     }
 }

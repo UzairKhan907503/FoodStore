@@ -25,14 +25,6 @@ class CategoryLocalDataSourceImpl @Inject constructor(
         categoryDao.insert(categories.toDBModel())
     }
 
-    override suspend fun searchProducts(query: String): Flow<List<Category>> {
-        return categoryDao.getFilteredProducts(query)
-            .distinctUntilChanged()
-            .map {
-                it.toDomainModel()
-            }
-    }
-
     override suspend fun deleteAll() {
         categoryDao.deleteAll()
     }

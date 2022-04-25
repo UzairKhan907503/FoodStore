@@ -36,5 +36,10 @@ dependencies {
     implementation persistenceDependencies.ktx
     kapt persistenceDependencies.compiler
     testImplementation persistenceDependencies.testing
+    androidTestImplementation testingDependencies.androidJunit
+    androidTestImplementation testingDependencies.archCore
+    androidTestImplementation testingDependencies.androidxRunner
+    androidTestImplementation testingDependencies.googleTruth
     implementation project(path: ':shared:data:remote')
+
 }

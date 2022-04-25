@@ -3,6 +3,7 @@ package com.sampleapp.dashboard.utils
 import com.sampleapp.dashboard.domain.models.Category
 import com.sampleapp.dashboard.domain.models.Product
 import com.sampleapp.local.db.models.CategoryDBModel
+import com.sampleapp.local.db.models.CategoryProductsDBModel
 import com.sampleapp.local.db.models.ProductDBModel
 
 /**
@@ -29,3 +30,7 @@ fun Category.toDBModel() = CategoryDBModel(
     categoryId = categoryId,
     description = description
 )
+
+fun List<Category>.toCategoryProductDBModel() = this.map {
+    CategoryProductsDBModel(it.toDBModel(),it.products.toDBModel())
+}

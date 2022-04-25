@@ -12,3 +12,14 @@ fun <T, R> Resource<T>.transform(
     is Resource.Invalid -> Resource.Invalid(message, data?.let { converter.invoke(it) })
     is Resource.Loading -> Resource.Loading(data?.let { converter.invoke(it) })
 }
+
+
+/**
+ * get data from resource
+ */
+
+fun <T> Resource<T>.getDataOrNull() = when (this) {
+    is Resource.Valid -> data
+    is Resource.Invalid -> data
+    is Resource.Loading -> data
+}

@@ -41,9 +41,6 @@ dependencies {
     api commonDependencies.appCompat
     api commonDependencies.material
     api commonDependencies.constraintlayout
-    testImplementation commonDependencies.junit
-    androidTestImplementation commonDependencies.androidJunit
-    androidTestImplementation commonDependencies.expresso
     kapt commonDependencies.hiltKapt
     api commonDependencies.hilt
     api commonDependencies.coroutineCore
@@ -54,8 +51,7 @@ dependencies {
     api commonDependencies.uiKtx
     api commonDependencies.coil
     api commonDependencies.swipe
-
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
     api project(path: ':shared:data:local')
     api project(path: ':shared:data:remote')
 }

@@ -34,16 +34,15 @@ class CategoryAdapter(
     inner class CategoryViewHolder(
         private val binding: ItemCategoryProductsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        private lateinit var adapter: ProductAdapter
 
         fun bind(model: Category) {
             binding.apply {
                 tvCategoryTitle.text = model.name
-                adapter = ProductAdapter { productPosition ->
+                rvProduct.adapter = ProductAdapter { productPosition ->
                     onClick(adapterPosition, productPosition)
+                }.apply {
+                    submitList(model.products)
                 }
-                rvProduct.adapter = adapter
-                adapter.submitList(model.products)
             }
         }
     }

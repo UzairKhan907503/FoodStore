@@ -3,7 +3,6 @@ package com.sampleapp.dashboard.ui.productlist
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.sampleapp.core.ui.base.BaseFragmentWithVM
 import com.sampleapp.dashboard.ui.productlist.adapter.category.CategoryAdapter
@@ -45,19 +44,19 @@ class FoodItemsListFragment :
             }
         }
 
-            collectWhenStarted {
-                getViewModel().state.collect { states ->
-                    when (states) {
-                        is FoodItemsListStates.ProductsDetailsFetched -> {
-                            binding.progress.invisible()
-                            adapter.submitList(states.categoryList)
-                        }
-                        is FoodItemsListStates.Loading -> {
-                            binding.progress.visible()
-                        }
+        collectWhenStarted {
+            getViewModel().state.collect { states ->
+                when (states) {
+                    is FoodItemsListStates.ProductsDetailsFetched -> {
+                        binding.progress.invisible()
+                        adapter.submitList(states.categoryList)
+                    }
+                    is FoodItemsListStates.Loading -> {
+                        binding.progress.visible()
                     }
                 }
             }
+        }
 
     }
 

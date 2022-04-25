@@ -14,11 +14,6 @@ interface CategoryLocalDataSource {
      */
     suspend fun saveCategoriesWithProducts(categories: List<Category>)
 
-    /**
-     *  Returns a list of categories containing query
-     */
-    suspend fun searchProducts(query: String): Flow<List<Category>>
-
     suspend fun deleteAll()
 
 }
